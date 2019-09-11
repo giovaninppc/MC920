@@ -42,6 +42,6 @@ def setupArguments() -> Arguments:
         halfTones.append(HalfTones("Jarvas Judice and Ninke", JJN))
 
     if len(halfTones) == 0:
-        print('You gotta tell which half tone transformation you want to use. Check --help for help.')
+        print('You gotta tell which half tone transformation you want to use.\nEx: -fs for Floyd-Steinberg, -all for all transformations...\nCheck --help for more help.')
 
     return Arguments(image_path, halfTones)
