@@ -1,6 +1,4 @@
 import numpy as np
-import skimage
-from scipy import ndimage
 import matplotlib.pyplot as plt
 from arguments import *
 from image_manipulation import *
@@ -11,7 +9,7 @@ def main():
 
     for config in args.halfTones:
         print('Processing ' + config.name)
-        out = distributeError(img, config.distribution)
+        out = distributeError(img.copy(), config.distribution)
         saveImage('out/' + args.imageName + '_' + config.name + '.png', out.astype(np.uint8))
         print('Finished processing ' + config.name + '\n')
 
@@ -24,7 +22,7 @@ def distributeError(img, distribution):
             if y % 2 == 0:
                 range_x = reversed(range_x)
             if y % 10 == 0:
-                print('.', end = '')
+                print('.', end = '', flush=True)
             for x in range_x:
                 normalized = 0 if img[x][y][z] < 128 else 255
                 error = img[x][y][z] - normalized
