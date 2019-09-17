@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 from arguments import *
 from image_manipulation import *
 
