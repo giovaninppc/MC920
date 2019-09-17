@@ -8,11 +8,12 @@ def main():
     img = openImage(args.imagePath)
 
     for method in args.limiarizationMethods:
+        print('Applying ' + method.name)
         out = limiarizate(img, method.method)
-        saveImage('out/' + args.imageName + '_' + method.name + '_.pgm', img.astype(np.uint8))
+        saveImage('out/' + args.imageName + '_' + method.name + '_.pgm', out.astype(np.uint8))
 
 def limiarizate(img, method):
-    return method(img)
+    return method(img.astype(int))
 
 if __name__ == '__main__':
     main()
