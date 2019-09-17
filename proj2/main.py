@@ -9,7 +9,7 @@ def main():
     img = openImage(args.imagePath)
 
     for method in args.limiarizationMethods:
-        out = limiarizate(img, method)
+        out = limiarizate(img, method.method)
         saveImage('out/' + args.imageName + '_' + method.name + '_.pgm', img.astype(np.uint8))
 
 
