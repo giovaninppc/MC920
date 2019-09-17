@@ -10,7 +10,4 @@ Transform colorized images to binary color channels.
 
 ## [Limiarization](https://github.com/giovaninppc/MC920/tree/master/limiarization)
 Techniques to define limits on images, split foreground from background.
-
-| From | to (Global limiarization, example) |
-|---|---|
-| ![](https://raw.githubusercontent.com/giovaninppc/MC920/master/limiarization/images/fiducial.pgm) | ![](https://github.com/giovaninppc/MC920/blob/master/limiarization/out/images-fiducial_Global_.pgm?raw=true) |
+Using pgm images.
