@@ -11,6 +11,7 @@ def main():
         print('Applying ' + method.name)
         out = limiarizate(img, method.method)
         saveImage('out/' + args.imageName + '_' + method.name + '_.pgm', out.astype(np.uint8))
+        print('\nDone')
 
 def limiarizate(img, method):
     return method(img.astype(int))

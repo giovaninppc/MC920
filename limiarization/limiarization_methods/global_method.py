@@ -1,5 +1,5 @@
 def globalLimiarization(img):
     output = img
-    output[output < 128] = 0
-    output[output >= 128] = 255
+    output[output < 50] = 0
+    output[output >= 50] = 255
     return output

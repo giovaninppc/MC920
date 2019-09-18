@@ -17,6 +17,7 @@ def setupArguments() -> Arguments:
     argParser.add_argument('input_image_path', help = 'The path to image file to be processed')
     argParser.add_argument('-g', '--global_method', help='Apply global limiarization', action='store_true')
     argParser.add_argument('-b', '--bernsen', help='Apply Bernsen limiarization', action='store_true')
+    argParser.add_argument('-n', '--niblack', help='Apply Niblack limiarization', action='store_true')
 
     args = argParser.parse_args()
     image_path = args.input_image_path
@@ -27,5 +28,7 @@ def setupArguments() -> Arguments:
         limiarizations.append(LimiarizationMethod('Global', globalLimiarization))
     if args.bernsen:
         limiarizations.append(LimiarizationMethod('Bernsen', bernsen))
+    if args.niblack:
+        limiarizations.append(LimiarizationMethod('Niblack', niblack))
 
     return Arguments(image_path, limiarizations)
