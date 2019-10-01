@@ -18,7 +18,6 @@ def main():
         histogram(out)
         print('\nDone')
 
-    c = input()
 
 def limiarizate(img, method):
     return method(img.astype(int))

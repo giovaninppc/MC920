@@ -1,5 +1,5 @@
 def bernsen(img):
-    size = 4 # n*n
+    size = 10 # n*n
     out = img
 
     for x in range(0, img.shape[0]):
