@@ -12,7 +12,7 @@ def main():
 
     for method in args.limiarizationMethods:
         print('Applying ' + method.name)
-
+        histogram(img)
         out = limiarizate(img, method.method)
         saveImage('out/' + args.imageName + '_' + method.name + '_.pgm', out.astype(np.uint8))
         histogram(out)

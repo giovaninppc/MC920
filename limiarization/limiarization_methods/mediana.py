@@ -1,5 +1,5 @@
 def mediana(img):
-    size = 7 # n*n
+    size = 15 # n*n
     out = img
 
     for x in range(0, img.shape[0]):
