@@ -12,6 +12,9 @@ Transform colorized images to binary color channels.
 Techniques to define limits on images, split foreground from background.
 Using pgm images.
 
-| From | to  |
+| From | to (Brukes)  |
 |---|---|
-| ![]() | ![]() |
+| ![](https://github.com/giovaninppc/MC920/blob/master/limiarization/docs/examples/original.png?raw=true) | ![](https://github.com/giovaninppc/MC920/blob/master/limiarization/docs/examples/Burkes.png?raw=true) |
+
+## [Object Detection](https://github.com/giovaninppc/MC920/tree/master/objects)
+Detect objects (shapes, borders and limits) in an image.
