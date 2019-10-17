@@ -53,10 +53,49 @@
 
         Onde o parâmetro \textit{[imagem]} define o caminho relativo da imagem que será processada.
 
-    \subsection{Dependências}
+        Ao executar o projeto, ele irá aplicar as tranformações disponíveis e salvar as imagens resultantes na pasta \textit{/out}.
 
+        As aplicações são:
+
+        \begin{itemize}
+            \item Escala de cinza
+            \item Detecção de bordas
+            \item Identificação dos objetos (label)
+        \end{itemize}
+
+        Além disso, será impresso na saída padrão dados de todos os objetos encontrados das imagens:
+
+        \begin{itemize}
+            \item Área
+            \item Perímetro
+            \item Excentricidade
+            \item Solidez
+        \end{itemize}
+
+        E para cada imagem, será montado um histograma que mede a quantidade de objetos por área da imagem.
 
 \section{Transformações}
+
+    \subsection{Conversão em escala de cinza}
+
+        A imagens utilizadas estavam em formato \textit{.png}, que são essencialmente imagens com 3 canais de cor, ou seja, coloridas.
+
+        Parte da análise era feita em imagens em escala de cinza, para isso, foi utilizada a biblioteca \textit{scikit-image}, com o módulo \textit{colors} que possui o método \textit{rgb2gray} que converte uma imagem colorida em escala de cinza.
+
+        Isso também implica que a entrada desse método é um array tridimensional (3D) e a saída um array bidimensional (2D).
+
+        Um efeito colateral da aplicação deste método é que ele retorna uma matriz de valores fracionários (float) entre 0 e 1. Para salvar a imagem, ela deve ser convertida novamente em uma matriz de inteiros, onde a variação fica entre 0 e 255 (256 níveis de cinza discretizados).
+
+        A própria biblioteca trata esse problema ao salvar a imagem.
+
+        Podemos vez um exemplo de conversão em escala de cinza na imagem \ref{cinza}.
+
+        \begin{figure}[ht]
+            \centering
+            \includegraphics[width=200]{grayscale.png}
+            \caption{Imagem gerada através da aplicação da conversão da imagem original colorida em escala de cinza.}
+            \label{cinza}
+        \end{figure}
 
     \subsection{Detecção de bordas}
 
@@ -65,10 +104,74 @@
 
         Ao aplicar o método de \textit{Sobel} na imagem desejada, ele destaca as bordas das imagens e remove toda informação adicional da imagem.
 
+        Um exemplo da aplicação do Método de detecção de bordas de Sobel pode ser observado na imagem \ref{sobel}.
+
+        \begin{figure}[ht]
+            \centering
+            \includegraphics[width=200]{edges.png}
+            \caption{Imagem gerada através da aplicação do método de sobel para identificação de bordas.}
+            \label{sobel}
+        \end{figure}
+
+    \subsection{Identificação dos Objetos}
+
+        Para a identificação dos objetos foi utilizada a biblioteca \textit{scikit-image}, mais específicamente o módulo \textit{measure}.
+
+        Este módulo tráz o método \textit{regionprops}, que funciona tanto em imagens em escala de cinza (2D) como em imagens coloridas (3D).
+
+        No nosso caso, foi utilizado apenas para imagens em escalas de cinza (pois isso facilitava outras análises e medições da mesma biblioteca).
+
+        Este método retorna uma imagem onde os objetos encontrados são coloridos inteiramente e com cores diferentes entre si. Por exemplo, 2 objetos distinto teriam seus pixels inteiramente formados por apenas um valor de níveis de cinza, e seriam diferentes entre os objetos em si.
+
+        Um exemplo de aplicação pode ser observado na \imagem ref{labeliza}.
+
+        \begin{figure}[ht]
+            \centering
+            \includegraphics[width=200]{labeled.png}
+            \caption{Imagem gerada através da aplicação da geração de labels numa imagem em escala de cinza.}
+            \label{labeliza}
+        \end{figure}
+
 \section{Resultados}
 
+    Todas as transformações citadas foram aplicadas para as três imagens disponibilizadas de entrada, e os resultados podem ser vistos a seguir.
+
+    Isso inclui os histogramas que comparam as áreas dos objetos encontrados nas imagens.
+
+
+    \begin{figure}[ht]
+        \centering
+        \includegraphics[width=\linewidth]{img1.png}
+        \caption{a) imagem original (arquivo de entrada \textit{img01.png}). b) transformação em escala de cinza. c) Detecção de bordas. d) Labels.}
+        \label{img1}
+    \end{figure}
+
+    \begin{figure}[ht]
+        \centering
+        \includegraphics[width=200]{hist1.png}
+        \caption{Histograma da distribuição dos objetos por área encontrados na imagem \textit{img01.png}.}
+        \label{hist1}
+    \end{figure}
+
+    \begin{figure}[ht]
+        \centering
+        \includegraphics[width=\linewidth]{img2.png}
+        \caption{a) imagem original (arquivo de entrada \textit{img02.png}). b) transformação em escala de cinza. c) Detecção de bordas. d) Labels.}
+        \label{img2}
+    \end{figure}
+
+    \begin{figure}[ht]
+        \centering
+        \includegraphics[width=200]{hist2.png}
+        \caption{Histograma da distribuição dos objetos por área encontrados na imagem \textit{img02.png}.}
+        \label{hist2}
+    \end{figure}
 
 \section{Análises}
+
+    A detecção de objetos encontrou o número correto de objetos nas imagens, é possível perceber isso nas figuras \ref{img1} e \ref{img2} itens (d), que mostram todos os objetos encontrados - e é fácil perceber que todos os objetos existentes nas imagens em (a), as imagens originais, foram todos detectados.
+
+    Os histogramas das imagens \ref{hist1} e \ref{hist2} trazem a quantidade de objetos por área da imagem, onde um objeto é considerado pequeno se sua área é menor que $1500$ pixels, médio se entre $1500$ e $3000$ pixels, e grande se maior que $3000$ pixels.
 
 
 \section{Conclusão}
@@ -77,7 +180,9 @@
 
     A detecção de bordas foi muito bem comportada para o conjunto de imagens analisados, conseguindo destacar fielmente as bordas dos objetos visualmente presentes nas imagens.
 
+    A transformação em escala de cinza também foi dentro do esperado, o conjunto resultante passou a ser uma matriz bidimensional (2D), ou seja, com apenas um canal de cor, sendo assim monocromática.
 
+    A detecção de objetos também foi dentro do esperado, o número de objetos detectados foi o correto e as propriedades puderam sex extraídas de cada objeto.
 
 \begin{thebibliography}{00}
 

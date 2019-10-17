@@ -5,6 +5,9 @@ from imageManipulation import *
 import math
 import matplotlib.pyplot as plt
 
+small_area = 1500
+medium_area = 3000
+
 def main():
     args = setupArguments()
 
@@ -20,9 +23,7 @@ def main():
     # Label
     labeled, numberOfObjects, regions = labelObjects(grayscale, name)
 
-    fig, ax = plt.subplots()
-    ax.imshow(labeled, cmap=plt.cm.gray)
-
+    areas = []
     # Output
     print('número de regiões' + str(numberOfObjects))
 
@@ -32,6 +33,16 @@ def main():
         .format(i, props.area, props.perimeter, props.eccentricity, props.solidity))
         i += 1
 
+        if props.area < small_area:
+            areas.append(0)
+        elif props.area < medium_area:
+            areas.append(1)
+        else:
+            areas.append(2)
+
+    # Objects area histogram
+    plt.hist(areas, bins=32)
+    plt.show()
 
 def extractEdges(img, name):
     sobelConverted = detectEdge(img)
