@@ -3,7 +3,7 @@ import argparse
 class Arguments():
     def __init__(self, imagePath: str):
         self.imagePath = imagePath
-        self.imageName = imagePath.replace('.pgm', '').replace('/', '-')
+        self.imageName = imagePath.replace('.png', '').replace('/', '-')
 
 def setupArguments() -> Arguments:
     argParser = argparse.ArgumentParser(description = 'Arguments for the Image processing')

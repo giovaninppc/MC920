@@ -1,0 +1,90 @@
+\documentclass[conference]{IEEEtran}
+\usepackage{cite}
+\usepackage[portuges,brazil]{babel}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{siunitx}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage[toc,page]{appendix}
+\usepackage[utf8]{inputenc}
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\begin{document}
+
+\title{Projeto 3: Detecção de Objetos\\
+\large .\\
+\large MC920 - Introdução ao Processamento Digital de Imagem (MC920 / MO443) 2S2019\\
+\large Professor: Hélio Pedrini}
+
+\newcommand{\email}[1]{\href{mailto:#1}{#1}}
+
+\author{
+    \IEEEauthorblockN{Giovani Nascimento Pereira}
+    \IEEEauthorblockA{
+    \email{giovani.x.pereira@gmail.com} \\
+    168609
+    }
+}
+
+\maketitle
+
+\section{Definição do problema}
+
+  Métodos de detecção de objetos em imagens tem inúmeras aplicações no cotidiano e em processos de tratamentos de imagens.
+
+  Tais métodos podem ser utilizados para identificar a existência de objetos conhecidos, e com isso, encontrar outras métricas como dimensão, posição, forma, etc.
+
+    \subsection{Objetivo}
+
+        O objetivo deste projeto é implementar métodos de detecção e descrição de objetos em imagens coloridas (.png), e analisar os resultados obtidos, encontrando múlitplos objetos por imagem.
+
+    \subsection{Execução do projeto}
+
+        O projeto pode ser executado utilizando o comando:
+
+        \begin{lstlisting}[language=bash]
+        $ python3 main.py [imagem]
+        \end{lstlisting}
+
+        Onde o parâmetro \textit{[imagem]} define o caminho relativo da imagem que será processada.
+
+    \subsection{Dependências}
+
+
+\section{Transformações}
+
+    \subsection{Detecção de bordas}
+
+        Para a detecção de bordas, foi utilizado o método de \textit{Sobel} disponível na biblioteca \textit{scikit-image}.
+        Para tanto, a imegam deve ser previamente convertida em escala de cinza, de forma a manter apenas um canal de cor, ao invés de 3 canais. Esse processo foi feito utilizando também a biblioteca \textit{scikit-image}, através do método \textit{rgbToGray}.
+
+        Ao aplicar o método de \textit{Sobel} na imagem desejada, ele destaca as bordas das imagens e remove toda informação adicional da imagem.
+
+\section{Resultados}
+
+
+\section{Análises}
+
+
+\section{Conclusão}
+
+    Com os dados obtidos dos métodos de detecção e descrição de objetos podemos dizer que o resultado do projeto foi satisfatório.
+
+    A detecção de bordas foi muito bem comportada para o conjunto de imagens analisados, conseguindo destacar fielmente as bordas dos objetos visualmente presentes nas imagens.
+
+
+
+\begin{thebibliography}{00}
+
+  \bibitem{helio} Helio Pedrini. Trabalho 3. Introdução ao Processamento Digital de Imagem (MC920 / MO443), 2019.\\
+
+  \bibitem{srgb} SRGB. disponível em \url{https://en.wikipedia.org/wiki/SRGB}. Acesso 11 de setembro de 2019.
+
+\end{thebibliography}
+
+\end{document}
