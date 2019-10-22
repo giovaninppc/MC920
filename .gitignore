@@ -103,3 +103,8 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# Mac os positioning files
+.ds_*
+.DS_*
+.Ds_*
