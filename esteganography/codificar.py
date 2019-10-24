@@ -6,9 +6,9 @@ def main():
 
     args = setupCodificationArguments()
 
-    binaryString = TextToBinary('socorro eu to aqui', args.debug)
+    binaryString = textToBinary('socorro eu to aqui', args.debug)
 
-    
+    string = binaryToText(binaryString, True)
 
 
 if __name__ == '__main__':
