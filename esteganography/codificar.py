@@ -8,13 +8,13 @@ def main():
 
     args = setupCodificationArguments()
 
-    #Get input text and image
+    # Get input text and image
     txt = openTextFile(args.input_text)
     img = openImage(args.input_image_path)
 
     # Convert text to binary and add to image
     binaryString = textToBinary(txt, args.debug)
-    codedImg = addTextToImage(img, 0, binaryString, args.debug)
+    codedImg = addTextToImage(img, int(args.bits), binaryString, args.debug)
 
     # Save image
     saveImage(args.output_image_path, codedImg)
