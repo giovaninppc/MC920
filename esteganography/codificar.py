@@ -1,14 +1,23 @@
 from arguments import *
 from textManipulation import *
+from imageManipulation import *
+from fileManipulation import *
 
 def main():
     print('Codificando')
 
     args = setupCodificationArguments()
 
-    binaryString = textToBinary('socorro eu to aqui', args.debug)
+    #Get input text and image
+    txt = openTextFile(args.input_text)
+    img = openImage(args.input_image_path)
 
-    string = binaryToText(binaryString, True)
+    # Convert text to binary and add to image
+    binaryString = textToBinary(txt, args.debug)
+    codedImg = addTextToImage(img, 0, binaryString, args.debug)
+
+    # Save image
+    saveImage(args.output_image_path, codedImg)
 
 
 if __name__ == '__main__':

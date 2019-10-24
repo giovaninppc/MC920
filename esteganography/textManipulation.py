@@ -6,14 +6,13 @@ def textToBinary(txt, debug):
 
     for c in txt:
         ascii = ord(c)
-        binaryAscii = '{0:b}'.format(ascii)
-        formattedAscii = loss[0 : (8 - len(binaryAscii))] + binaryAscii
+        binaryAscii = '{0:08b}'.format(ascii)
 
         #DEBUG-----
-        if debug: print('{} ->\t{}\t-> {}'.format(str(c), str(ascii), formattedAscii))
+        if debug: print('{} ->\t{}\t-> {}'.format(str(c), str(ascii), binaryAscii))
         #----------
 
-        binaryString += formattedAscii
+        binaryString += binaryAscii
 
     return binaryString
 
