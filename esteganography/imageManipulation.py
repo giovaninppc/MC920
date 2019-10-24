@@ -1,22 +1,26 @@
 def addTextToImage(img, bits, txt, debug):
 
-    # 0 -> R
-    # 1 -> G
-    # 2 -> B
-    channel = bits % 3
+    replaceIndex = 7 - bits
     counter = 0
+
+    if debug:
+        print('----------------')
+        print('Applying changes on {} bit'.format(replaceIndex))
 
     for x in range(0, img.shape[0]):
         for y in range(0, img.shape[1]):
+            for z in range(0, img.shape[2]):
 
-            if counter >= len(txt): return img
+                if counter >= len(txt): return img
 
-            pixel = img[x][y][channel]
+                pixel = img[x][y][z]
 
-            binary = bin(pixel)[2:]
-            binary = binary[:-1] + txt[counter]
+                binary = '{0:08b}'.format(pixel)
+                replacedBinary = binary[:replaceIndex] + txt[counter] + binary[replaceIndex + 1:]
 
-            newPixel = int(binary, 2)
-            img[x][y][channel] = newPixel
+                newPixel = int(replacedBinary, 2)
+                img[x][y][z] = newPixel
 
-            counter += 1
+                if debug: print('{} + {} ->\t{} -> {}'.format(pixel, txt[counter], binary, replacedBinary))
+
+                counter += 1
