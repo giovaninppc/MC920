@@ -35,16 +35,67 @@
 
 \section{Definição do problema}
 
+    Esteganografia é uma forma de transmissão de dados codificados em imagens.
 
     \subsection{Objetivo}
 
+        O objetivo deste trabalho é de implementar métodos de esteganografia, codificando mensagens em imagens e depois sendo capaz de recuperá-las.
+
     \subsection{Execução do projeto}
 
+        Para executar os projeto, existem 2 scripts:
+
+        \begin{itemize}
+            \item codificar.py
+            \item decodificar.py
+        \end{itemize}
+
+        Para executar os scripts são utilizados os comandos:
+
+
+        Onde \textit{[input_image]} é o caminho da imagem de entrada, na qual será codificada a mensagem.
+        \textit{[input_text]} é o caminho do texto a ser codificado.
+        \textit{[output_text]} é o caminho do texto de saída gerado na decodificação.
+        \textit{[bits]} é qual bit menos significativo será alterado para a codificação da mensagem.
+        E onde \textit{[output_image]} é o caminho da imagem gerada na codificação.
+
+        A única \textit{[flag]} disponível para a execução é a \textit{-d} que habilita que informação de debug seja imprimida na saída padrão.
+        Isso inclui etapas intermediárias do processo de conversão de caracteres em uma string binárias para a codificação e do processo reverso também.
 
 
 \section {Codificação}
 
+    \{Conversão do texto em binário}
+
+    Para ser inserido na imagem, o texto de entrada deve ser convertido em uma sequência de bits que representa o mesmo texto.
+    Isso foi feito, para cada caracter, convertendo para seu valor na tabela ASCII. Com esse valor numérico, ele foi transformado numa string que representava o mesmo valor mas em codificação binária.
+
+    Por exemplo, o caracter $a$, equivale a $97$ na tabela ASCII.
+    Com esse valor, convertemos $97$ em binário $01100001$.
+
+    É importante que as strings que representam os caracteres tenham exatamente $8$ caracteres, isso garante consistência no nosso processo e facilita a decodificação, bem como a codificação.
+
+    Esse processo é repetido para todo caracter do texto de entrada, e concatenado com o texto em binário final a ser codificado.
+
+    Ao final, também foi adicionado um caracter que não pertencia ao texto de entrada, chamado de \textit{caracter de parada}. Este caracter é uma sequência de 8 zeros $00000000$. Na tabela ASCII este caracter de valor $0$ não representa um caracter visível, e no nosso caso, pode ser usado para demarcar o fim do arquivo a ser lido.
+
+    Caso não houvesse um caracter de parada, ficaria mais difícil definir durante a decodificação quando a mensagem teria acabado, podendo tentar decodificar a imagem toda durante a decodificação.
+
+    \{Codificação na imagem}
+
+    Para inserir a mensagem, já representada em uma string binária na imagem, é iterado sobre a imagem pixel a pixel e em cada canal de cor RGB da mesma, modificando o bit menos significativo escolhido com o valor da string desejada.
+
+    Por exemplo próximo valor a ser inserido é $1$ no bit menos significativo, e a imagem tem um pixel preto, que indica que tanto RGB tem valor mínimo, zero.
+    Então o valor do pixel, representado em binário é $00000000$, adicionando o valor desejado tem-se $00000001$.
+
+    E este processo é repetido para todos os caracteres da mensagem a ser codificada.
+
+
 \section {Decodificação}
+
+    \{Leitura da Imagem}
+
+    A iomagem é aberta da mesma forma...
 
 \section{Resultados}
 
@@ -52,9 +103,21 @@
 
 \section{Análises}
 
+    É possível notar quer as imagens finais geradas depois do processo de codificação das mensagens são muito semelhantes às imagens originais.
+
+    Isso se deve pelo fato que os valores modificados na imagens se referem aos bits menos significativos das mesmas, assim as mudanças em níveis de cor são pouco refletidas.
+    Isso mesmo até para os textos grandes.
+
+    Contudo, com uma análise mais profunda dos valores dos pixels, é possível notar sim que há uma mudança na cor dos pixels modificados.
+    Isso pode ser observado na imagem a seguir:
+
 
 
 \section{Conclusão}
+
+    Através do resultados obtidos no projeto é possível dizer que o experimento foi satisfatório.
+    De maneira geral foi possível codificar mensagens em imagens coloridas (.png) e depois obter as mesmas mensagens através apenas das imagens codificadas.
+
 
 
 \begin{thebibliography}{00}
