@@ -19,6 +19,8 @@ def main():
     # Save image
     saveImage(args.output_image_path, codedImg)
 
+    print('Done!')
+
 
 if __name__ == '__main__':
     main()

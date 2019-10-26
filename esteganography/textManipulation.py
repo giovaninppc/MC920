@@ -1,5 +1,6 @@
+stopCharacter = '00000000'
+
 def textToBinary(txt, debug):
-    loss = '00000000'
     binaryString = ''
 
     if debug: print('Converting <{}> to binary'.format(txt))
@@ -14,7 +15,7 @@ def textToBinary(txt, debug):
 
         binaryString += binaryAscii
 
-    return binaryString
+    return binaryString + stopCharacter
 
 
 def binaryToText(bin, debug):
@@ -26,6 +27,9 @@ def binaryToText(bin, debug):
     stringSize = int(len(binaryString) / 8)
     for index in range(0, stringSize):
         characterBinaryString = binaryString[(index * 8) : ((index + 1) * 8)]
+
+        if characterBinaryString == stopCharacter: return string
+
         characterNumeric = int(characterBinaryString, 2)
         character = chr(characterNumeric)
 

@@ -12,3 +12,8 @@ def openTextFile(path):
     txt = file.read()
     file.close()
     return txt
+
+def writeTextFile(path, text):
+    file = open(path, 'w+')
+    file.write(text)
+    file.close()
