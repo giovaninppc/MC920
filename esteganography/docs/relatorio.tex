@@ -111,10 +111,42 @@
 
 \section{Resultados}
 
-    As imagens foram geradas usando um texto de XXXX caracteres.
+    As imagens a seguir foram geradas codificando um texto de $20.764$ caracteres. O texto escolhido foi um \textit{Lorem Ipsum} genérico, e foi aplicado na imagem do \textit{baboon.png}.
 
-    Para a imagem do \textit{baboon.png} que tem dimensão X x X, ou seja, contém XXX pixels, colm capacidade
+    \begin{figure}[ht]
+        \centering
+        \includegraphics[width=150px]{baboon.png}
+        \caption{imagem original do baboon}
+        \label{baboon-org}
+    \end{figure}
 
+    \begin{figure}[ht]
+        \centering
+        \includegraphics[width=150px]{baboon01.png}
+        \caption{imagem do baboon com o texto modelo esteganografado no bit menos significativo}
+        \label{baboon1}
+    \end{figure}
+
+    \begin{figure}[ht]
+        \centering
+        \includegraphics[width=150px]{baboon02.png}
+        \caption{imagem do baboon com o texto modelo esteganografado no segundo bit menos significativo}
+        \label{baboon2}
+    \end{figure}
+
+    \begin{figure}[ht]
+        \centering
+        \includegraphics[width=150px]{baboon03.png}
+        \caption{imagem do baboon com o texto modelo esteganografado no terceiro bit menos significativo}
+        \label{baboon3}
+    \end{figure}
+
+    A imagem original do baboon está em formato png e tem dimensões $512$ x $512$ pixels.
+
+    Isso significa que tem $262.144$ pixels no total, e como tem 3 canais de cor, é capaz de abrigar até três vezes a quatidade de pixels em bits.
+
+    Como cada caracter ocupa 8 bits, é possível codificar mensagens de até $98.304$ caracteres nessa imagem.
+    Isso significa que o texto utilizado de $20.764$ caracteres pode ser todo codificado na imagem e ocupa $21.1\%$ dos pixels.
 
 \section{Análises}
 
@@ -129,7 +161,8 @@
     \begin{figure}[ht]
         \centering
         \includegraphics[width=\linewidth]{baboonColors.png}
-        \caption{Esquematização dos 6 primeiros pixels da imagem \textit{baboon} com os níveis de cor explicitados em cada pixel, na ordem R G e B. a - Imagem original. b - imagem aplicada esteganografia para o bit menos significativo. c - imagem aplicada esteganografia para o segundo bit menos significativo. d - imagem aplicada esteganografia para o terceioro bit menos significativo}
+        \caption{Esquematização dos 6 primeiros pixels da imagem \textit{baboon} com os níveis de cor explicitados em cada pixel, na ordem R G e B. a - Imagem original. b - imagem aplicada esteganografia para o bit menos significativo. c - imagem aplicada esteganografia para o segundo bit menos significativo. d - imagem aplicada esteganografia para o terceioro bit menos significativo.
+        O texto codificado na imagem foi \textit{"Eu sei o que vocês fizeram no verão passado."}}
         \label{fig:bbc}
     \end{figure}
 
@@ -137,12 +170,19 @@
 
     Dessa forma, uma mensagem esteganografada numa imagem colorida é muito difícil de ser percebida, apesar de se tratar de um processo relativamente simples de codificação.
 
+    Se observarmos novamente a imagem \ref{fig:bbc}, os 6 primeiros pixels da imagem são capazes de armazenar 18 bits (3 cada pixel).
+    Com isso, conseguem armazenar apenas 2 carateres por completo.
+
+    Vamos analisar o primeiro caracter codificado, a letra \textbf{E}.
+
+    \textbf{E} equivale a $69$ na tabela ASCII e $01000101$ em binário.
+    Esse foi o valor gravado nos bits dos 3 primeiros pixels da imagem, em um dos 3 últimos bits menos significativos para cada item.
+
+
 \section{Conclusão}
 
     Através do resultados obtidos no projeto é possível dizer que o experimento foi satisfatório.
-    De maneira geral foi possível codificar mensagens em imagens coloridas (.png) e depois obter as mesmas mensagens através apenas das imagens codificadas.
-
-    AO observar os valroes dos pixels das inagens, foi possível notar que os níveis de cinza foram alterados em seus bits menos significativos (quando observados em valores binários) em relação à imagem original.
+    De maneira geral foi possível codificar mensagens em imagens coloridas (.png) e depois obter as mesmas mensagens através apenas das imagens codificadas e do conhecimento de qual bit menos significativo estava a mensagem.
 
 
 \begin{thebibliography}{00}
