@@ -53,19 +53,18 @@
         Para executar os scripts são utilizados os comandos:
 
 
-        Onde \textit{[input_image]} é o caminho da imagem de entrada, na qual será codificada a mensagem.
-        \textit{[input_text]} é o caminho do texto a ser codificado.
-        \textit{[output_text]} é o caminho do texto de saída gerado na decodificação.
-        \textit{[bits]} é qual bit menos significativo será alterado para a codificação da mensagem.
-        E onde \textit{[output_image]} é o caminho da imagem gerada na codificação.
+        Onde \textit{input$\_$image} é o caminho da imagem de entrada, na qual será codificada a mensagem.
+        \textit{input$\_$text} é o caminho do texto a ser codificado.
+        \textit{output$\_$text} é o caminho do texto de saída gerado na decodificação.
+        \textit{bits} é qual bit menos significativo será alterado para a codificação da mensagem.
+        E onde \textit{output$\_$image} é o caminho da imagem gerada na codificação.
 
-        A única \textit{[flag]} disponível para a execução é a \textit{-d} que habilita que informação de debug seja imprimida na saída padrão.
+        A única \textit{flag} disponível para a execução é a \textit{-d} que habilita que informação de debug seja imprimida na saída padrão.
         Isso inclui etapas intermediárias do processo de conversão de caracteres em uma string binárias para a codificação e do processo reverso também.
-
 
 \section {Codificação}
 
-    \{Conversão do texto em binário}
+    \subsection{Conversão do texto em binário}
 
     Para ser inserido na imagem, o texto de entrada deve ser convertido em uma sequência de bits que representa o mesmo texto.
     Isso foi feito, para cada caracter, convertendo para seu valor na tabela ASCII. Com esse valor numérico, ele foi transformado numa string que representava o mesmo valor mas em codificação binária.
@@ -73,19 +72,19 @@
     Por exemplo, o caracter $a$, equivale a $97$ na tabela ASCII.
     Com esse valor, convertemos $97$ em binário $01100001$.
 
-    É importante que as strings que representam os caracteres tenham exatamente $8$ caracteres, isso garante consistência no nosso processo e facilita a decodificação, bem como a codificação.
+    É importante que as strings que representam os caracteres tenham exatamente $8$ caracteres, isso garante consistência no nosso processo e facilita a decodificação.
 
     Esse processo é repetido para todo caracter do texto de entrada, e concatenado com o texto em binário final a ser codificado.
 
     Ao final, também foi adicionado um caracter que não pertencia ao texto de entrada, chamado de \textit{caracter de parada}. Este caracter é uma sequência de 8 zeros $00000000$. Na tabela ASCII este caracter de valor $0$ não representa um caracter visível, e no nosso caso, pode ser usado para demarcar o fim do arquivo a ser lido.
 
-    Caso não houvesse um caracter de parada, ficaria mais difícil definir durante a decodificação quando a mensagem teria acabado, podendo tentar decodificar a imagem toda durante a decodificação.
+    Caso não houvesse um caracter de parada, ficaria mais difícil definir durante a decodificação quando a mensagem teria acabado, podendo tentar decodificar a imagem toda durante o processo e não apenas a parte que contém a mensagem desejada.
 
-    \{Codificação na imagem}
+    \subsection{Codificação na imagem}
 
-    Para inserir a mensagem, já representada em uma string binária na imagem, é iterado sobre a imagem pixel a pixel e em cada canal de cor RGB da mesma, modificando o bit menos significativo escolhido com o valor da string desejada.
+    Para inserir a mensagem, já representada em uma string binária, na imagem, é iterado sobre a imagem pixel a pixel e em cada canal de cor RGB da mesma (nessa ordem), modificando o bit menos significativo escolhido com o valor da string desejada.
 
-    Por exemplo próximo valor a ser inserido é $1$ no bit menos significativo, e a imagem tem um pixel preto, que indica que tanto RGB tem valor mínimo, zero.
+    Por exemplo próximo valor a ser inserido é $1$ no bit menos significativo, e a imagem tem um pixel preto, que indica que todo canal de cor RGB tem valor mínimo, zero.
     Então o valor do pixel, representado em binário é $00000000$, adicionando o valor desejado tem-se $00000001$.
 
     E este processo é repetido para todos os caracteres da mensagem a ser codificada.
@@ -93,12 +92,28 @@
 
 \section {Decodificação}
 
-    \{Leitura da Imagem}
+    \subsection{Leitura da Imagem}
 
-    A iomagem é aberta da mesma forma...
+    A imagem é aberta da mesma forma e o bit no qual a mensagem deve estar codificada é apresentado.
+
+    Com essas informações, a fim de extrair a mensagem da imagem, basta iterar sobre todos os pixels na ordem correta dos canais de cor RBG e ir \textit{acumulando} o valor dos bits menos significativos.
+
+    \subsection{Conversão em texto}
+
+    O acumulado de todos os bits extraídos dos pixels da imagem é a sequência de bits que pode corresponder a mensagem desejada.
+    Para descobrir tanto, é iterado sobre esse conjunto de bits de 8 em 8, pois cada caracter é representado em 8 bits.
+
+    Um conjunto de 8 bits representa um valor numérico, então podeos converte-lo em um numero, e depois disso pegar o valor equivalente na tabela ASCII.
+
+    Fazendo esse processo corretamente é possível extrair uma mensgaem que tenha sido codificada na imagem.
+
+    Além disso, esse processo pode parar se o caracter de parada, que tem valor numérico $0$, for encontrado.
 
 \section{Resultados}
 
+    As imagens foram geradas usando um texto de XXXX caracteres.
+
+    Para a imagem do \textit{baboon.png} que tem dimensão X x X, ou seja, contém XXX pixels, colm capacidade
 
 
 \section{Análises}
@@ -111,13 +126,23 @@
     Contudo, com uma análise mais profunda dos valores dos pixels, é possível notar sim que há uma mudança na cor dos pixels modificados.
     Isso pode ser observado na imagem a seguir:
 
+    \begin{figure}[ht]
+        \centering
+        \includegraphics[width=\linewidth]{baboonColors.png}
+        \caption{Esquematização dos 6 primeiros pixels da imagem \textit{baboon} com os níveis de cor explicitados em cada pixel, na ordem R G e B. a - Imagem original. b - imagem aplicada esteganografia para o bit menos significativo. c - imagem aplicada esteganografia para o segundo bit menos significativo. d - imagem aplicada esteganografia para o terceioro bit menos significativo}
+        \label{fig:bbc}
+    \end{figure}
 
+    Mesmo havendo mudanças, elas são sutis, e ao observar a imagem como um tudo não é possível notar diferenças.
+
+    Dessa forma, uma mensagem esteganografada numa imagem colorida é muito difícil de ser percebida, apesar de se tratar de um processo relativamente simples de codificação.
 
 \section{Conclusão}
 
     Através do resultados obtidos no projeto é possível dizer que o experimento foi satisfatório.
     De maneira geral foi possível codificar mensagens em imagens coloridas (.png) e depois obter as mesmas mensagens através apenas das imagens codificadas.
 
+    AO observar os valroes dos pixels das inagens, foi possível notar que os níveis de cinza foram alterados em seus bits menos significativos (quando observados em valores binários) em relação à imagem original.
 
 
 \begin{thebibliography}{00}
